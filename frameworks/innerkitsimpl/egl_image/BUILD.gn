@@ -1,0 +1,110 @@
+# Copyright (C) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//foundation/multimedia/image_framework/ide/image_decode_config.gni")
+
+config("egl_image_public_config") {
+  include_dirs = [ "include" ]
+}
+
+config("egl_image_private_config") {
+  defines = [
+    "SK_SUPPORT_GPU=1",
+    "GR_TEST_UTILS=1",
+    "SK_GL=1",
+  ]
+}
+
+ohos_shared_library("egl_image") {
+  branch_protector_ret = "pac_ret"
+  sanitize = {
+    cfi = true
+    cfi_cross_dso = true
+    cfi_vcall_icall_only = true
+    debug = false
+  }
+
+  public_configs = [ ":egl_image_public_config" ]
+  configs = [ ":egl_image_private_config" ]
+  sources = [
+    "src/pixel_map_from_surface.cpp",
+    "src/render_context.cpp",
+  ]
+
+  if (use_new_skia_temp) {
+    defines = [ "USE_M133_SKIA" ]
+  }
+  deps = [ "$image_subsystem/interfaces/innerkits:image_native" ]
+
+  external_deps = [
+    "c_utils:utils",
+    "graphic_2d:EGL",
+    "graphic_2d:GLESv3",
+    "graphic_surface:surface",
+    "graphic_surface:sync_fence",
+    "hilog:libhilog",
+    "hitrace:hitrace_meter",
+    "ipc:ipc_single",
+    "skia:skia_canvaskit",
+  ]
+
+  innerapi_tags = [ "platformsdk" ]
+  subsystem_name = "multimedia"
+  part_name = "image_framework"
+}
+
+if (!use_clang_ios && !use_clang_android) {
+  ohos_shared_library("post_proc_gl") {
+    sanitize = {
+      cfi = true
+      cfi_cross_dso = true
+      cfi_vcall_icall_only = true
+      debug = false
+    }
+    include_dirs = [
+      "include",
+      "../../../interfaces/innerkits/include",
+      "../../../interfaces/utils/include",
+      "../utils/include",
+    ]
+    sources = [
+      "../utils/src/image_trace.cpp",
+      "src/pixel_map_gl_context.cpp",
+      "src/pixel_map_gl_post_proc_program.cpp",
+      "src/pixel_map_gl_shader.cpp",
+      "src/pixel_map_program_manager.cpp",
+    ]
+    if (use_new_skia_temp) {
+      defines = [ "USE_M133_SKIA" ]
+    }
+    external_deps = [
+      "ipc:ipc_single",
+    ]
+    public_external_deps = [
+      "c_utils:utils",
+      "graphic_2d:EGL",
+      "graphic_2d:GLESv3",
+      "graphic_2d:color_manager",
+      "graphic_surface:surface",
+      "graphic_surface:sync_fence",
+      "hilog:libhilog",
+      "hitrace:hitrace_meter",
+      "skia:skia_canvaskit",
+    ]
+
+    innerapi_tags = [ "platformsdk" ]
+    subsystem_name = "multimedia"
+    part_name = "image_framework"
+  }
+}

@@ -1,0 +1,283 @@
+{
+    "name": "@ohos/image_framework",
+    "description": "Image standard provides atomic capabilities",
+    "version": "3.1",
+    "license": "Apache License 2.0",
+    "publishAs": "code-segment",
+    "segment": {
+      "destPath": "foundation/multimedia/image_framework"
+    },
+    "dirs": {},
+    "scripts": {},
+    "component": {
+      "name": "image_framework",
+      "subsystem": "multimedia",
+      "syscap": [
+        "SystemCapability.Multimedia.Image.Core",
+        "SystemCapability.Multimedia.Image.ImageSource",
+        "SystemCapability.Multimedia.Image.ImagePacker",
+        "SystemCapability.Multimedia.Image.ImageReceiver",
+        "SystemCapability.Multimedia.Image.ImageCreator"
+      ],
+      "features": [],
+      "adapted_system_type": [ "standard" ],
+      "rom": "10000KB",
+      "ram": "10000KB",
+      "hisysevent_config": [ "//foundation/multimedia/image_framework/hisysevent.yaml" ],
+      "deps": {
+        "components": [
+          "ability_runtime",
+          "access_token",
+          "bundle_framework",
+          "c_utils",
+          "graphic_2d",
+          "graphic_surface",
+          "hichecker",
+          "hitrace",
+          "hilog",
+          "hisysevent",
+          "ipc",
+          "napi",
+          "zlib",
+          "init",
+          "memory_utils",
+          "drivers_interface_codec",
+          "drivers_interface_display",
+          "hdf_core",
+          "memmgr_override",
+          "libjpeg-turbo",
+          "libexif",
+          "libpng",
+          "opencl-headers",
+          "ffmpeg",
+          "astc-encoder",
+          "skia",
+          "samgr",
+          "resource_management",
+          "json",
+          "ffrt",
+          "openmax",
+          "os_account",
+          "runtime_core",
+          "qos_manager",
+          "eventhandler",
+          "ets_runtime"
+        ],
+        "third_party": [
+          "bounds_checking_function"
+        ]
+      },
+      "build": {
+        "sub_component": [
+          "//foundation/multimedia/image_framework:image_framework",
+          "//foundation/multimedia/image_framework:plugins",
+          "//foundation/multimedia/image_framework/frameworks/kits/ani:image_framework_ani"
+        ],
+        "inner_kits": [
+          {
+            "header":{
+              "header_files":[
+                "image_receiver_impl.h",
+                "image_impl.h",
+                "image_creator_impl.h",
+                "image_ffi.h",
+                "image_packer_impl.h",
+                "image_source_impl.h",
+                "pixel_map_impl.h"
+              ],
+              "header_base": "//foundation/multimedia/image_framework/frameworks/kits/cj/include"
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/cj:cj_image_ffi"
+          },
+          {
+            "header":{
+              "header_files":[
+                "pixel_convert_adapter.h",
+                "pixel_map_jni_utils.h"
+              ],
+              "header_base": "//foundation/multimedia/image_framework/frameworks/innerkitsimpl/pixelconverter/include"
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/innerkitsimpl/pixelconverter:pixelconvertadapter"
+          },
+          {
+            "header": {
+              "header_files": [
+                "auxiliary_picture.h",
+                "picture.h",
+                "pixel_map.h",
+                "image_packer.h",
+                "image_source.h",
+                "image_type.h",
+                "peer_listener.h",
+                "incremental_pixel_map.h",
+                "pixel_map_manager.h",
+                "decode_listener.h",
+                "pixel_map_parcel.h",
+                "image_format_convert.h"
+              ],
+              "header_base": "//foundation/multimedia/image_framework/interfaces/innerkits/include"
+            },
+            "name": "//foundation/multimedia/image_framework/interfaces/innerkits:image_native"
+          },
+          {
+            "header": {
+              "header_files": [
+                "image_packer_napi.h",
+                "image_source_napi.h",
+                "native_module_ohos_image.h",
+                "pixel_map_napi.h"
+              ],
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/js/common/include"
+            },
+            "name": "//foundation/multimedia/image_framework/interfaces/kits/js/common:image"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/image/",
+              "header_files": [
+                "image_common.h",
+                "pixelmap_native.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/pixelmap_ndk:pixelmap"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/image/",
+              "header_files": [
+                "image_common.h",
+                "picture_native.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/picture_ndk:picture"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/",
+              "header_files": [
+                "image_pixel_map_napi.h",
+                "image_pixel_map_mdk.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/pixelmap_ndk:pixelmap_ndk"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/",
+              "header_files": [
+                "image_mdk_common.h",
+                "image_mdk.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/ndk:image_ndk"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/",
+              "header_files": [
+                "image_mdk_common.h",
+                "image_receiver_mdk.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/ndk:image_receiver_ndk"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/frameworks/innerkitsimpl/utils/include/",
+              "header_files": [
+                "image_utils.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/innerkitsimpl/utils:image_utils"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/frameworks/kits/ani/native/include/",
+              "header_files": [
+                "pixel_map_ani.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/ani:image_ani"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/",
+              "header_files": [
+                "image_source_mdk.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/ndk:image_source_ndk"          
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/image",
+              "header_files": [
+                "image_source_native.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/ndk:image_source"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/",
+              "header_files": [
+                "image_packer_mdk.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/ndk:image_packer_ndk"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/image",
+              "header_files": [
+                "image_packer_native.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/js/common/ndk:image_packer"
+          },
+          {
+            "header":{
+              "header_files":[
+                "pixel_map_from_surface.h"
+              ],
+              "header_base": "//foundation/multimedia/image_framework/frameworks/innerkitsimpl/egl_image/include"
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/innerkitsimpl/egl_image:egl_image"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/image/",
+              "header_files": [
+                "image_common.h",
+                "image_native.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/native/common/ndk:ohimage"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/interfaces/kits/native/include/image/",
+              "header_files": [
+                "image_common.h",
+                "image_receiver_native.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/frameworks/kits/native/common/ndk:image_receiver"
+          },
+          {
+            "header": {
+              "header_base": "//foundation/multimedia/image_framework/plugins/manager/include",
+              "header_files": [
+                "image/abs_image_encoder.h"
+              ]
+            },
+            "name": "//foundation/multimedia/image_framework/plugins/common/libs/image/libextplugin:extplugin"
+          }
+        ],
+        "test": [
+          "//foundation/multimedia/image_framework/frameworks/innerkitsimpl/test:unittest",
+          "//foundation/multimedia/image_framework/frameworks/innerkitsimpl/test/fuzztest:fuzztest"
+        ]
+      }
+    }
+  }
